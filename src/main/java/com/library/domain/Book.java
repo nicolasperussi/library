@@ -1,15 +1,9 @@
 package com.library.domain;
 
 import jakarta.persistence.*;
-import lombok.*;
 
 @Entity(name = "books")
 @Table(name = "books")
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@EqualsAndHashCode(of = "id")
 public class Book {
 
     @Id
