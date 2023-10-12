@@ -1,7 +1,9 @@
 package com.library.controllers;
 
 import com.library.domain.Book;
+import com.library.domain.dtos.BookDTO;
 import com.library.services.BookService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,8 +29,8 @@ public class BookController {
     }
 
     @PostMapping
-    public ResponseEntity<Book> create(@RequestBody Book book) {
-        Book newBook = service.create(book);
+    public ResponseEntity<Book> create(@Valid @RequestBody BookDTO book) {
+        Book newBook = service.create(book.toBook());
         return ResponseEntity.status(201).body(newBook);
     }
 
