@@ -22,4 +22,12 @@ public class LoanService {
         Optional<Loan> obj = repository.findById(id);
         return obj.get();
     }
+
+    public Loan create(Loan loan) {
+        return repository.save(loan);
+    }
+
+    public void delete(Long id) {
+        repository.deleteById(id);
+    }
 }

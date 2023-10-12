@@ -21,7 +21,6 @@ public class User implements Serializable {
 
     public String name;
 
-    @JsonIgnore
     @Column(unique = true)
     public String document;
 

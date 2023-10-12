@@ -22,4 +22,17 @@ public class UserService {
         Optional<User> obj = repository.findById(id);
         return obj.get();
     }
+
+    public User findByDocument(String document) {
+        Optional<User> obj = repository.findByDocument(document);
+        return obj.get();
+    }
+
+    public User create(User user) {
+        return repository.save(user);
+    }
+
+    public void delete(Long id) {
+        repository.deleteById(id);
+    }
 }
