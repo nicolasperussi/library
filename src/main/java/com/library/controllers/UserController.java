@@ -2,7 +2,9 @@ package com.library.controllers;
 
 import com.library.domain.Book;
 import com.library.domain.User;
+import com.library.domain.dtos.UserDTO;
 import com.library.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,8 +36,8 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> create(@RequestBody User user) {
-        User newUser = service.create(user);
+    public ResponseEntity<User> create(@Valid @RequestBody UserDTO userDTO) {
+        User newUser = service.create(userDTO.toUser());
         return ResponseEntity.status(201).body(newUser);
     }
 
