@@ -1,11 +1,13 @@
 package com.library.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -23,6 +25,7 @@ public class User implements Serializable {
     @Column(unique = true)
     public String document;
 
+    @JsonIgnoreProperties("user")
     @OneToMany(mappedBy = "user")
     private Set<Loan> loans = new HashSet<>();
 
@@ -59,7 +62,6 @@ public class User implements Serializable {
         this.document = document;
     }
 
-    @JsonIgnore
     public Set<Loan> getLoans() {
         return loans;
     }
