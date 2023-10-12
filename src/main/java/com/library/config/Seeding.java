@@ -40,7 +40,7 @@ public class Seeding implements CommandLineRunner {
         User u2 = new User(null, "Paulo", "22266688800");
         User u3 = new User(null, "Júlia", "33377799900");
 
-        Loan l1 = new Loan(null, u1, Instant.now(), Instant.now().plus(30, ChronoUnit.DAYS));
+        Loan l1 = new Loan(null, u1, 15);
         l1.getBooks().add(b8);
         b8.getLoans().add(l1);
         u1.getLoans().add(l1);

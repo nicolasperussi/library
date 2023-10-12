@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,6 @@ public class Loan implements Serializable {
     @ManyToOne
     private User user;
 
-
     @JsonIgnoreProperties("loans")
     @ManyToMany
     @JoinTable(
@@ -34,7 +34,7 @@ public class Loan implements Serializable {
     private List<Book> books = new ArrayList<>();
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
-    private Instant loanDate;
+    private Instant loanDate = Instant.now();
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private Instant dueDate;
@@ -42,11 +42,10 @@ public class Loan implements Serializable {
     public Loan() {
     }
 
-    public Loan(Long id, User user, Instant loanDate, Instant dueDate) {
+    public Loan(Long id, User user, int days) {
         this.id = id;
         this.user = user;
-        this.loanDate = loanDate;
-        this.dueDate = dueDate;
+        this.dueDate = Instant.now().plus(days, ChronoUnit.DAYS);
     }
 
 
