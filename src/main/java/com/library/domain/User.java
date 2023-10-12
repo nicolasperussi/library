@@ -25,7 +25,7 @@ public class User implements Serializable {
     public String document;
 
     @JsonIgnoreProperties("user")
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Loan> loans = new HashSet<>();
 
     public User() {

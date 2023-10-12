@@ -42,8 +42,6 @@ public class Seeding implements CommandLineRunner {
 
         Loan l1 = new Loan(null, u1, 15);
         l1.getBooks().add(b8);
-        b8.getLoans().add(l1);
-        u1.getLoans().add(l1);
 
         bookRepository.saveAll(Arrays.asList(b1, b2, b3, b4, b5, b6, b7, b8, b9, b10));
         userRepository.saveAll(Arrays.asList(u1, u2, u3));

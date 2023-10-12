@@ -28,7 +28,7 @@ public class Book implements Serializable {
     public Integer availableAmount;
 
     @JsonIgnoreProperties("books")
-    @ManyToMany(mappedBy = "books")
+    @ManyToMany(mappedBy = "books", cascade = CascadeType.ALL)
     private Set<Loan> loans = new HashSet<>();
 
     public Book() {
