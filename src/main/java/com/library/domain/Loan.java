@@ -3,6 +3,7 @@ package com.library.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,7 +11,7 @@ import java.util.List;
 
 @Entity(name = "loans")
 @Table(name = "loans")
-public class Loan {
+public class Loan implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
