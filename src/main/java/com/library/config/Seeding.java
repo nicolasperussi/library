@@ -1,13 +1,17 @@
 package com.library.config;
 
 import com.library.domain.Book;
+import com.library.domain.Loan;
 import com.library.domain.User;
 import com.library.repositories.BookRepository;
+import com.library.repositories.LoanRepository;
 import com.library.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 
 @Configuration
@@ -16,6 +20,8 @@ public class Seeding implements CommandLineRunner {
     private BookRepository bookRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private LoanRepository loanRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -30,12 +36,17 @@ public class Seeding implements CommandLineRunner {
         Book b9 = new Book(null, "Livro 9", "Autor 9", "Descrição 9", 8);
         Book b10 = new Book(null, "Livro 10", "Autor 10", "Descrição 10", 10);
 
-        bookRepository.saveAll(Arrays.asList(b1, b2, b3, b4, b5, b6, b7, b8, b9, b10));
-
         User u1 = new User(null, "Rafael", "11155577700");
         User u2 = new User(null, "Paulo", "22266688800");
         User u3 = new User(null, "Júlia", "33377799900");
 
+        Loan l1 = new Loan(null, u1, Instant.now(), Instant.now().plus(30, ChronoUnit.DAYS));
+        l1.getBooks().add(b8);
+        b8.getLoans().add(l1);
+        u1.getLoans().add(l1);
+
+        bookRepository.saveAll(Arrays.asList(b1, b2, b3, b4, b5, b6, b7, b8, b9, b10));
         userRepository.saveAll(Arrays.asList(u1, u2, u3));
+        loanRepository.save(l1);
     }
 }
