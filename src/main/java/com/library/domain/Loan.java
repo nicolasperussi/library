@@ -24,7 +24,7 @@ public class Loan implements Serializable {
     @ManyToOne
     private User user;
 
-    @JsonIgnoreProperties("loans")
+    @JsonIgnoreProperties({"loans", "availableAmount"})
     @ManyToMany
     @JoinTable(
             name = "loan_books",
