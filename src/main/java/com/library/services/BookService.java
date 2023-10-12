@@ -29,4 +29,17 @@ public class BookService {
     public void delete(Long id) {
         repository.deleteById(id);
     }
+
+    public Book update(Long id, Book book) {
+        Book entity = repository.getReferenceById(id);
+        updateData(entity, book);
+        return repository.save(entity);
+    }
+
+    private void updateData(Book entity, Book obj) {
+        entity.setName(obj.getName());
+        entity.setDescription(obj.getDescription());
+        entity.setAuthor(obj.getAuthor());
+        entity.setAvailableAmount(obj.getAvailableAmount());
+    }
 }
