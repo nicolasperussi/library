@@ -1,8 +1,6 @@
 package com.library.domain;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -39,7 +37,7 @@ public class Book implements Serializable {
         this.name = name;
         this.author = author;
         this.description = description;
-        this.availableAmount = availableAmount;
+        this.availableAmount = Objects.requireNonNullElse(availableAmount, 0);
     }
 
     public Long getId() {
