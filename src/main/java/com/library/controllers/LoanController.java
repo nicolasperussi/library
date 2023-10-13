@@ -9,6 +9,7 @@ import com.library.services.LoanService;
 import com.library.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +28,11 @@ public class LoanController {
     @GetMapping
     public ResponseEntity<List<Loan>> findAll() {
         List<Loan> list = service.findAll();
+
+        if (list.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
         return ResponseEntity.ok().body(list);
     }
 
