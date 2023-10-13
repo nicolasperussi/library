@@ -6,6 +6,7 @@ import com.library.domain.dtos.UserDTO;
 import com.library.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,11 @@ public class UserController {
     @GetMapping
     public ResponseEntity<List<User>> findAll() {
         List<User> list = service.findAll();
+
+        if (list.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
         return ResponseEntity.ok().body(list);
     }
 
