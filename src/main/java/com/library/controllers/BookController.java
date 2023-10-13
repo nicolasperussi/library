@@ -5,6 +5,7 @@ import com.library.domain.dtos.BookDTO;
 import com.library.services.BookService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,11 @@ public class BookController {
     @GetMapping
     public ResponseEntity<List<Book>> findAll() {
         List<Book> list = service.findAll();
+
+        if (list.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
         return ResponseEntity.ok().body(list);
     }
 
