@@ -1,8 +1,13 @@
 package com.library.services;
 
 import com.library.domain.Book;
+import com.library.exceptions.DatabaseException;
+import com.library.exceptions.ResourceNotFoundException;
 import com.library.repositories.BookRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,8 +23,7 @@ public class BookService {
     }
 
     public Book findById(Long id) {
-        Optional<Book> obj = repository.findById(id);
-        return obj.get();
+        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Couldn't find book with id " + id));
     }
 
     public Book create(Book book) {
@@ -27,13 +31,22 @@ public class BookService {
     }
 
     public void delete(Long id) {
-        repository.deleteById(id);
+        try {
+            Book book = this.repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Couldn't find book with id " + id));
+            repository.delete(book);
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseException(e.getMessage());
+        }
     }
 
     public Book update(Long id, Book book) {
-        Book entity = repository.getReferenceById(id);
-        updateData(entity, book);
-        return repository.save(entity);
+        try {
+            Book entity = repository.getReferenceById(id);
+            updateData(entity, book);
+            return repository.save(entity);
+        } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException("Couldn't find book with id " + id);
+        }
     }
 
     private void updateData(Book entity, Book obj) {
